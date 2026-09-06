@@ -253,9 +253,7 @@
 
         window.addEventListener("resize", checkOrientation);
 
-        window.addEventListener("orientationchange", () => {
-          setTimeout(checkOrientation, 300);
-        });
+        window.addEventListener("orientationchange", checkOrientation);
 
       }).catch((message) => {
 
