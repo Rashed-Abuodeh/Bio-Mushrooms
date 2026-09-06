@@ -168,6 +168,11 @@
       const canvas = document.querySelector("#unity-canvas-container");
       canvas.style.width = window.innerWidth + "px";
       canvas.style.height = window.innerHeight + "px";
+
+      window.addEventListener("resize", checkOrientation);
+      window.addEventListener("orientationchange", checkOrientation);
+      window.onload = checkOrientation;
+      
     }
     var buildUrl = "Build";
 
@@ -248,12 +253,6 @@
         unityInstance = instance;
 
         loadingBar.style.display = "none";
-                // Unity is fully loaded now
-        checkOrientation();
-
-        window.addEventListener("resize", checkOrientation);
-
-        window.addEventListener("orientationchange", checkOrientation);
 
       }).catch((message) => {
 
