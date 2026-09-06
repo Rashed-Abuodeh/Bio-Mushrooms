@@ -120,6 +120,26 @@
     }
   </style>
 </head>
+<script>
+  function checkOrientation() {
+    if (window.innerHeight > window.innerWidth) {
+      document.getElementById("rotateMessage").style.display = "flex";
+      document.getElementById("unity-container").style.display = "none";
+    } else {
+      document.getElementById("rotateMessage").style.display = "none";
+      document.getElementById("unity-container").style.display = "block";
+    }
+
+    //resizeCanvas
+    const canvas = document.querySelector("#unity-canvas-container");
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+  }
+
+  window.addEventListener("resize", checkOrientation);
+  window.addEventListener("orientationchange", checkOrientation);
+  window.onload = checkOrientation;
+</script>
 
 <body>
 
@@ -154,26 +174,6 @@
   </div>
 
   <script>
-
-    function checkOrientation() {
-      if (window.innerHeight > window.innerWidth) {
-        document.getElementById("rotateMessage").style.display = "flex";
-        document.getElementById("unity-container").style.display = "none";
-      } else {
-        document.getElementById("rotateMessage").style.display = "none";
-        document.getElementById("unity-container").style.display = "block";
-      }
-
-      //resizeCanvas
-      const canvas = document.querySelector("#unity-canvas-container");
-      canvas.style.width = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
-
-      window.addEventListener("resize", checkOrientation);
-      window.addEventListener("orientationchange", checkOrientation);
-      window.onload = checkOrientation;
-
-    }
     var buildUrl = "Build";
 
     var loaderUrl =
