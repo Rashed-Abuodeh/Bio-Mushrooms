@@ -17,27 +17,6 @@
   </style>
 </head>
 
-<script>
-  function checkOrientation() {
-    if (window.innerHeight > window.innerWidth) {
-      document.getElementById("rotateMessage").style.display = "flex";
-      document.getElementById("unity-container").style.display = "none";
-    } else {
-      document.getElementById("rotateMessage").style.display = "none";
-      document.getElementById("unity-container").style.display = "block";
-    }
-
-    //resizeCanvas
-    const canvas = document.querySelector("#unity-canvas-container");
-    canvas.style.width = window.innerWidth + "px";
-    canvas.style.height = window.innerHeight + "px";
-  }
-
-  window.addEventListener("resize", checkOrientation);
-  window.addEventListener("orientationchange", checkOrientation);
-  window.onload = checkOrientation;
-</script>
-
 <body>
 
   <div id="rotateMessage" style="
@@ -55,20 +34,34 @@
     Please rotate your device to landscape
   </div>
 
-    <div id="unity-container">
-      <div id="unity-canvas-container">
-        <canvas id="unity-canvas" style="width: 100%; height: 100%;"></canvas>
-      </div>
-      <div id="unity-loading-bar">
-        <div id="unity-logo"></div>
-        <div id="unity-progress-bar-empty">
-          <div id="unity-progress-bar-full"></div>
-        </div>
+  <div id="unity-container">
+    <div id="unity-canvas-container">
+      <canvas id="unity-canvas" style="width: 100%; height: 100%;"></canvas>
+    </div>
+    <div id="unity-loading-bar">
+      <div id="unity-logo"></div>
+      <div id="unity-progress-bar-empty">
+        <div id="unity-progress-bar-full"></div>
       </div>
     </div>
+  </div>
 
 
   <script>
+    function checkOrientation() {
+      if (window.innerHeight > window.innerWidth) {
+        document.getElementById("rotateMessage").style.display = "flex";
+        document.getElementById("unity-container").style.display = "none";
+      } else {
+        document.getElementById("rotateMessage").style.display = "none";
+        document.getElementById("unity-container").style.display = "block";
+      }
+
+      //resizeCanvas
+      const canvas = document.querySelector("#unity-canvas-container");
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+    }
     var buildUrl = "Build";
     var loaderUrl = buildUrl + "/Bio-Mushrooms.loader.js";
     var config = {
@@ -100,6 +93,14 @@
       }).then((instance) => {
         unityInstance = instance;
         loadingBar.style.display = "none";
+        // Unity is fully loaded now
+        checkOrientation();
+
+        window.addEventListener("resize", checkOrientation);
+
+        window.addEventListener("orientationchange", () => {
+          setTimeout(checkOrientation, 300);
+        });
 
       }).catch((message) => {
         alert(message);
